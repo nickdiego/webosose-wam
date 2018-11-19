@@ -18,12 +18,11 @@
 #define WEBAPPMANAGER_H
 
 #include <list>
-#include <map>
 #include <memory>
+#include <unordered_map>
 #include <string>
 #include <vector>
 
-#include <QMultiMap>
 #include <QString>
 
 #include "webos/webview_base.h"
@@ -192,12 +191,12 @@ private:
     bool isContainerApp(const std::string& url);
     uint32_t getContainerAppProxyID();
 
-    QMap<QString, WebAppBase*> m_closingAppList;
+    std::unordered_map<QString, WebAppBase*> m_closingAppList;
 
     // Mappings
-    QMap<std::string, WebPageBase*> m_shellPageMap;
+    std::unordered_map<std::string, WebPageBase*> m_shellPageMap;
     AppList m_appList;
-    QMultiMap<std::string, WebPageBase*> m_appPageMap;
+    std::unordered_multimap<std::string, WebPageBase*> m_appPageMap;
 
     PageList m_pagesToDeleteList;
     bool m_deletingPages;
@@ -211,11 +210,11 @@ private:
     std::unique_ptr<WebAppManagerConfig> m_webAppManagerConfig;
     std::unique_ptr<NetworkStatusManager> m_networkStatusManager;
 
-    QMap<QString, int> m_lastCrashedAppIds;
+    std::unordered_map<QString, int> m_lastCrashedAppIds;
 
     int m_suspendDelay;
 
-    std::map<std::string, std::string> m_appVersion;
+    std::unordered_map<std::string, std::string> m_appVersion;
 
     bool m_isAccessibilityEnabled;
 };
