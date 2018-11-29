@@ -21,6 +21,7 @@
 #include "ApplicationDescription.h"
 #include "JsonHelper.h"
 #include "LogManager.h"
+#include "StringUtils.h"
 #include "WebAppBase.h"
 #include "WebAppWayland.h"
 #include "WebPageBlink.h"
@@ -82,7 +83,7 @@ std::string PalmSystemBlink::handleBrowserControlMessage(const std::string& mess
     } else if (message == "PmLogString") {
 #ifdef HAS_PMLOG
         if (params.size() > 3) {
-            auto level = static_cast<PmLogLevel>(std::stoi(params[0]));
+            auto level = static_cast<PmLogLevel>(stringTo<int>(params[0]));
             pmLogString(level, params[1], parasm[2], params[3]);
         }
 #endif
@@ -97,8 +98,8 @@ std::string PalmSystemBlink::handleBrowserControlMessage(const std::string& mess
         m_app->platformBack();
     } else if (message == "setCursor") {
         auto v1 = params[0];
-        auto v2 = std::stoi(params[1]);
-        auto v3 = std::stoi(params[2]);
+        auto v2 = stringTo<int>(params[1]);
+        auto v3 = stringTo<int>(params[2]);
         m_app->setCursor(v1, v2, v3);
     } else if (message == "setInputRegion") {
         std::stringstream ss;
